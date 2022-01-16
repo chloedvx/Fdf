@@ -8,23 +8,32 @@
 # include <mlx.h>
 # include <math.h>
 
-typedef struct s_list
+typedef struct s_coord
 {
-	int				x;
-	int				y;
-	struct s_list	*next;
-} t_list;
+	int	x;
+	int	y;
+	int	pxl_x;
+	int	pxl_y;
+	int	space_x;
+	int	space_y;
+	int	iso_x;//float ??
+	int	iso_y;
+} t_coord;
 
 typedef struct s_data
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
+	int		nbr_lines;
 } t_data;
 
+t_coord	*ft_coord_init(void);
+t_data	*data_init(char *av1);
+void	ft_putchar(char c);
+void	ft_putnbr(int nb);
+int		nb_lines(int fd);
 int		ft_atoi(const char *str);
-void	ft_matrice(int **line, void *data);
 int     *ft_to_int(char *str, int nbr_int);
-void	ft_display(int **line);
 int		**ft_parse(char *path);
 char	*get_next_line(int fd);
 char	*get_next_line2(char **temp, int fd);

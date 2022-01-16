@@ -50,13 +50,27 @@ int	*ft_to_int(char *str, int nbr_int)
 		while (str[j] == 32)
 			j++;
 		tab[i] = ft_atoi((const char *)&str[j]);
-		printf("%d  ", tab[i]);
+//		printf("%d  ", tab[i]);
 		j += size_int(tab[i]);
 		i++;
 		nbr_int--;
 	}
-	printf("\n");
+//	printf("\n");
 	return (tab);
+}
+
+int	nb_lines(int fd)
+{
+	int		i;
+	char 	*str;
+
+	i = 0;
+	while ((str = get_next_line(fd)) != NULL)
+	{
+		i++;
+		free(str);
+	}
+	return (i);
 }
 
 int	**ft_parse(char *path)
@@ -64,19 +78,19 @@ int	**ft_parse(char *path)
 	int		i;
 	int		fd;
 	char	*str;
-	int		nb_lignes;
+	int		fd2;
 	int		**tmp;
 
 	fd = 0;
 	i = 0;
-	nb_lignes = 30;
 	fd = open(path, O_RDONLY);
+	fd2 = open(path, O_RDONLY);
 	if (fd == -1)
 	{
 		write(1, "Cannot read file.", 17);
 		return (0);
 	}
-	tmp = malloc(sizeof(int *) * nb_lignes);
+	tmp = malloc(sizeof(int *) * nb_lines(fd2));
 	while ((str = get_next_line(fd)) != NULL)
 	{
 		tmp[i] = ft_to_int(str, line_size(str));
@@ -85,54 +99,6 @@ int	**ft_parse(char *path)
 		str = NULL;
 	}
 	close(fd);
+	close(fd2);
 	return (tmp);
 }
-
-void	ft_display(int	**line) // temporaire 
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < 10)
-	{
-		j = 0;
-		while(j < 18)
-		{
-			printf("%d, ", line[i][j]);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
-}
-
-void	isometric(float *x,float *y)
-{
-
-	float	pre_x;
-	float	pre_y;
-
-	*x = pre_x - pre_y;
-	*y = (pre_x + pre_y) / 2;
-}
-/*
-void	ft_matrice(int **line, void *data)
-{
-	int	i;
-	int	j;
-	int	x;
-	int	y;
-	
-	i = 0;
-	while (line[i])
-	{
-		j = 0;
-		while (line[i][j])
-		{
-				mlx_pixel_put(data->mlx_ptr, data->win_ptr, i + 10, j + 10, 0x8b008b);
-			j++;
-		}
-		i++;
-	}
-}*/
