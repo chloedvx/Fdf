@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 09:49:51 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/01/17 16:47:52 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/01/17 17:01:43 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@
 
 typedef struct s_coord
 {
-	float	x0;
-	float	y0;
-	float	x1;
-	float	y1;
+	int	x0;
+	int	y0;
+	int	x1;
+	int	y1;
 } t_coord;
 
 typedef struct s_data
@@ -51,7 +51,7 @@ typedef struct s_colors
 t_colors	*colors_init(void);
 t_coord	*coord_init(t_data *data);
 t_data	*data_init(char *av1);
-void	isometric(float *x, float *y);
+void	isometric(int *x, int *y);
 void	ft_putchar(char c);
 void	ft_putnbr(int nb);
 int		line_size(char *str);

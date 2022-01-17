@@ -6,17 +6,17 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 09:50:13 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/01/17 16:54:02 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/01/17 17:01:10 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	isometric(float *x,float *y)
+void	isometric(int *x,int *y)
 {
 
-	float pre_x;
-	float pre_y;
+	int pre_x;
+	int pre_y;
 
 	pre_x = *x;
 	pre_y = *y;
