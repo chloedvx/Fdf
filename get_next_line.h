@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 13:20:45 by cdaveux           #+#    #+#             */
-/*   Updated: 2021/12/09 13:48:10 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/01/17 16:48:17 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
+#define BUFFER_SIZE 20
 
 char	*get_next_line(int fd);
 char	*get_next_line2(char **temp, int fd);

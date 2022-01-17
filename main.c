@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 09:49:43 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/01/17 16:30:59 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/01/17 16:53:59 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,10 @@ void	horiz_lines(t_data *data)
 		{
 			coord->x0 = j * data->gap_x + 100;
 			coord->y0 = i * data->gap_y + 100;
-	//		isometric(&coord->x0, &coord->y0);	
+		//	isometric(&coord->x0, &coord->y0);	
 			coord->x1 = coord->x0 + data->gap_x;
 			coord->y1 = coord->y0;
-	//		isometric(&coord->x1, &coord->y1);
+		//	isometric(&coord->x1, &coord->y1);
 			drawline(data, coord->x0, coord->y0, coord->x1, coord->y1);
 			j++;
 		}
@@ -110,7 +110,7 @@ void	vertical_lines(t_data *data)
 	int	j;
 	t_coord	*coord;
 
-	i = 0;
+	j = 0;
 	coord = malloc(sizeof(t_coord));
 	if (!coord)
 		exit(0);
@@ -121,10 +121,10 @@ void	vertical_lines(t_data *data)
 		{
 			coord->x0 = j * data->gap_x + 100;
 			coord->y0 = i * data->gap_y + 100;
-	//		isometric(&coord->x0, &coord->y0);
+		//	isometric(&coord->x0, &coord->y0);
 			coord->x1 = coord->x0;
 			coord->y1 = coord->y0 + data->gap_x;
-	//		isometric(&coord->x1, &coord->y1);
+		//	isometric(&coord->x1, &coord->y1);
 			drawline_vertic(data, coord->x0, coord->y0, coord->x1, coord->y1);
 			i++;
 		}
