@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 09:49:58 by cdaveux           #+#    #+#             */
+/*   Updated: 2022/01/17 14:40:29 by cdaveux          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 int	line_size(char *str)
@@ -9,11 +21,11 @@ int	line_size(char *str)
 	size = 0;
 	while(str[i] != '\n')
 	{
-		if ((str[i] > 47 && str[i] < 58) && str[i + 1] == 32)
+		if (str[i] == 32)	
 			size++;
 		i++;
 	}
-	return (size + 1);
+	return (size);
 }
 
 int	size_int(int nb)
@@ -59,46 +71,28 @@ int	*ft_to_int(char *str, int nbr_int)
 	return (tab);
 }
 
-int	nb_lines(int fd)
-{
-	int		i;
-	char 	*str;
-
-	i = 0;
-	while ((str = get_next_line(fd)) != NULL)
-	{
-		i++;
-		free(str);
-	}
-	return (i);
-}
-
-int	**ft_parse(char *path)
+int	**ft_parse(char *path, t_data *data)
 {
 	int		i;
 	int		fd;
 	char	*str;
-	int		fd2;
 	int		**tmp;
 
-	fd = 0;
 	i = 0;
 	fd = open(path, O_RDONLY);
-	fd2 = open(path, O_RDONLY);
 	if (fd == -1)
 	{
 		write(1, "Cannot read file.", 17);
 		return (0);
 	}
-	tmp = malloc(sizeof(int *) * nb_lines(fd2));
+	tmp = malloc(sizeof(int *) * data->nbr_lines);
 	while ((str = get_next_line(fd)) != NULL)
 	{
-		tmp[i] = ft_to_int(str, line_size(str));
+		tmp[i] = ft_to_int(str, data->nbr_col);
 		i++;
 		free(str);
 		str = NULL;
 	}
 	close(fd);
-	close(fd2);
 	return (tmp);
 }

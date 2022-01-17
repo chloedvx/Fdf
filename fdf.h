@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fdf.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 09:49:51 by cdaveux           #+#    #+#             */
+/*   Updated: 2022/01/17 16:20:48 by cdaveux          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #	ifndef FDF_H
 # define FDF_H
 
@@ -10,31 +22,42 @@
 
 typedef struct s_coord
 {
-	int	x;
-	int	y;
-	int	pxl_x;
-	int	pxl_y;
-	int	space_x;
-	int	space_y;
-	int	iso_x;//float ??
-	int	iso_y;
+	float	x0;
+	float	y0;
+	float	x1;
+	float	y1;
 } t_coord;
 
 typedef struct s_data
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
+	int		**line;
 	int		nbr_lines;
+	int		nbr_col;
+	int		size_x;
+	int		size_y;
+	int		gap_x;
+	int		gap_y;
 } t_data;
 
-t_coord	*ft_coord_init(void);
+typedef struct s_colors
+{
+	int	R;
+	int	G;
+	int	B;
+} t_colors;
+
+t_colors	*colors_init(void);
+t_coord	*coord_init(t_data *data);
 t_data	*data_init(char *av1);
+void	isometric(float *x, float *y);
 void	ft_putchar(char c);
 void	ft_putnbr(int nb);
-int		nb_lines(int fd);
+int		line_size(char *str);
 int		ft_atoi(const char *str);
 int     *ft_to_int(char *str, int nbr_int);
-int		**ft_parse(char *path);
+int		**ft_parse(char *path, t_data *data);
 char	*get_next_line(int fd);
 char	*get_next_line2(char **temp, int fd);
 int		ft_is_nl(char *temp);

@@ -1,39 +1,68 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/17 09:50:13 by cdaveux           #+#    #+#             */
+/*   Updated: 2022/01/17 16:23:26 by cdaveux          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 void	isometric(float *x,float *y)
 {
 
-	float	pre_x;
-	float	pre_y;
+	float pre_x;
+	float pre_y;
 
 	pre_x = *x;
 	pre_y = *y;
-	*x = pre_x - pre_y;
+	*x = (pre_x - pre_y);
 	*y = (pre_x + pre_y) / 2;
+	//*x = (pre_x - z)/ sqrt(2);
+	//*y = (pre_x + 2 * pre_y + z) / sqrt(6);
 }
 
-t_coord	*ft_coord_init(void)
+t_colors *colors_init(void)
 {
-	t_coord *coord;
+	t_colors	*colors;
 
-	coord = malloc(sizeof(t_coord));
-	coord->pxl_x = 500;
-	coord->pxl_y = 500;
-	coord->space_x = 20;
-	coord->space_y = 20;	
-	return (coord);
+	colors = malloc(sizeof(t_colors));
+	if (!colors)
+		return (0);
+	colors->R = 255;
+	colors->G = 255;
+	colors->B = 255;
+	return (colors);
 }
 
 t_data	*data_init(char *av1)
 {
 	t_data	*data;
 	int		fd;
+	char	*str;
 
 	fd = open(av1, O_RDONLY);
 	data = malloc(sizeof(t_data));
-	data->mlx_ptr = mlx_init();
-	data->win_ptr = mlx_new_window(data->mlx_ptr, 500, 500, "titre");
-	data->nbr_lines = nb_lines(fd);
+	if (!data)
+		return (0);
+	data->nbr_lines = 0;
+	while ((str = get_next_line(fd)) != NULL)
+	{
+		data->nbr_lines++;
+		data->nbr_col = line_size(str);
+		free(str);
+	}
 	close (fd);
+	data->size_x = data->nbr_col * 50;
+	data->size_y = data->nbr_lines * 50;
+	data->gap_x = 25;
+	data->gap_y = 25;
+	data->line = ft_parse(av1, data);
+	data->mlx_ptr = mlx_init();
+	data->win_ptr = mlx_new_window(data->mlx_ptr, data->size_x, data->size_y, "titre");
 	return (data);
 }
