@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 10:18:17 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/01/18 17:05:30 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/01/18 17:24:47 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	horiz_lines(t_data *data)
 	coord = malloc(sizeof(t_coord));
 	if (!coord)
 		exit(0);
-	while (i < data->nbr_lines)// horiz (lft>rght)
+	while (i < data->nbr_lines)
 	{
 		j = 0;
 		while (j < data->nbr_col - 1)
@@ -112,11 +112,9 @@ void	horiz_lines(t_data *data)
 			coord->x0 = j * data->gap_x;
 			coord->y0 = i * data->gap_y;
 			isometric(&coord->x0, &coord->y0, data->line[i][j]);
-		//	printf("post iso : x0 : %d, y0 : %d\n", coord->x0, coord->y0);
 			coord->x1 = (j + 1) * data->gap_x;
 			coord->y1 = i * data->gap_y;
 			isometric(&coord->x1, &coord->y1, data->line[i][j + 1]);
-		//	printf("post iso : x1 : %d, y1 : %d\n", coord->x1, coord->y1);
 			drawline_bres(data, coord->x0 + 400, coord->y0 + 100, coord->x1 + 400, coord->y1 + 100);
 			j++;
 		}
@@ -125,7 +123,7 @@ void	horiz_lines(t_data *data)
 	free(coord);
 }
 
-void	vertical_lines(t_data *data) // PBBBBB
+void	vertical_lines(t_data *data)
 {
 	int	i;
 	int	j;
@@ -135,7 +133,7 @@ void	vertical_lines(t_data *data) // PBBBBB
 	coord = malloc(sizeof(t_coord));
 	if (!coord)
 		exit(0);
-	while (j < data->nbr_col)// vertic top > down
+	while (j < data->nbr_col)
 	{
 		i = 0;
 		while (i < data->nbr_lines - 1)
@@ -143,11 +141,9 @@ void	vertical_lines(t_data *data) // PBBBBB
 			coord->x0 = j * data->gap_x;
 			coord->y0 = i * data->gap_y;
 			isometric(&coord->x0, &coord->y0, data->line[i][j]);
-	//		printf("post iso : x0 : %d, y0 : %d\n", coord->x0, coord->y0);
 			coord->x1 = j * 25;
 			coord->y1 = (i + 1) * 25;
 			isometric(&coord->x1, &coord->y1, data->line[i + 1][j]);
-	//		printf("post iso : x1 : %d, y1 : %d\n", coord->x1, coord->y1);
 			drawline_bres(data, coord->x0 + 400, coord->y0 + 100, coord->x1 + 400, coord->y1 + 100);
 
 			i++;
