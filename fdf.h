@@ -40,6 +40,8 @@ typedef struct s_data
 	int		size_y;
 	int		gap_x;
 	int		gap_y;
+	int		start_x;
+	int		start_y;
 } t_data;
 
 typedef struct s_colors
