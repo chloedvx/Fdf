@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 09:49:43 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/01/18 15:57:47 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/01/18 16:56:00 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,15 @@ int	ft_expose_hook(t_data *data)
 	return (0);
 }
 
+int	fdf(t_data *data)
+{
+	data->mlx_ptr = mlx_init();
+	if (!data->mlx_ptr)
+		exit(0);
+	data->win_ptr = mlx_new_window(data->mlx_ptr, data->size_x, data->size_y, "titre");
+	return (0);
+}
+
 int	main(int ac, char **av)
 {
 	t_data		*data;
@@ -41,6 +50,7 @@ int	main(int ac, char **av)
 	(void)ac;
 	data = data_init(av[1]);
 	colors = colors_init();
+	fdf(data);
 	mlx_key_hook(data->win_ptr, ft_key_hook, data);
 //	mlx_expose_hook(data->win_ptr, ft_expose_hook, data);
 	vertical_lines(data);

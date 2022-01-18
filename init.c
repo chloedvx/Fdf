@@ -6,13 +6,13 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 09:50:13 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/01/18 12:06:02 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/01/18 16:55:08 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	isometric(int *x,int *y)
+void	isometric(int *x,int *y, int z)
 {
 
 	int pre_x;
@@ -20,10 +20,10 @@ void	isometric(int *x,int *y)
 
 	pre_x = *x;
 	pre_y = *y;
-	*x = (pre_x - pre_y);
-	*y = (pre_x + pre_y) / 2;
-	//*x = (pre_x - z)/ sqrt(2);
-	//*y = (pre_x + 2 * pre_y + z) / sqrt(6);
+	*x = (pre_x - pre_y) * cos(0.8);
+	*y = (pre_x + pre_y) * sin (0.8) - z;/// 2;
+//	*x = (pre_x - z)/ sqrt(2);
+//	*y = (pre_x + 2 * pre_y + z) / sqrt(6);
 }
 
 t_colors *colors_init(void)
@@ -62,9 +62,5 @@ t_data	*data_init(char *av1)
 	data->gap_x = 25;
 	data->gap_y = 25;
 	data->line = ft_parse(av1, data);
-	data->mlx_ptr = mlx_init();
-	if (!data->mlx_ptr)
-		exit(0);
-	data->win_ptr = mlx_new_window(data->mlx_ptr, data->size_x, data->size_y, "titre");
 	return (data);
 }

@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 10:18:17 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/01/18 16:19:40 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/01/18 17:05:30 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	draw_line_bres_low(t_data *data, int x_0, int y_0, int x_1, int y_1)
     p = 2*dy - dx;
 	while (x_0 <= x_1)
 	{
-		mlx_pixel_put(data->mlx_ptr, data->win_ptr, x_0, y_0,0x00FFFF);
+		mlx_pixel_put(data->mlx_ptr, data->win_ptr, x_0, y_0,0xFFFFFF);
 		if (p > 0)
 		{
 			y_0 = y_0 + yi;
@@ -59,7 +59,7 @@ void	draw_line_bres_hi(t_data *data, int x_0, int y_0, int x_1, int y_1)
     p = 2*dx - dy;
 	while (y_0 <= y_1)
 	{
-		mlx_pixel_put(data->mlx_ptr, data->win_ptr, x_0, y_0,0x00FFFF);
+		mlx_pixel_put(data->mlx_ptr, data->win_ptr, x_0, y_0,0xFFFFFF);
 		if (p > 0)
 		{
 			x_0 = x_0 + xi;
@@ -109,15 +109,15 @@ void	horiz_lines(t_data *data)
 		j = 0;
 		while (j < data->nbr_col - 1)
 		{
-			coord->x0 = j * 25;
-			coord->y0 = i * 25;
-			isometric(&coord->x0, &coord->y0);
+			coord->x0 = j * data->gap_x;
+			coord->y0 = i * data->gap_y;
+			isometric(&coord->x0, &coord->y0, data->line[i][j]);
 		//	printf("post iso : x0 : %d, y0 : %d\n", coord->x0, coord->y0);
-			coord->x1 = (j + 1) * 25;
-			coord->y1 = i * 25;
-			isometric(&coord->x1, &coord->y1);
+			coord->x1 = (j + 1) * data->gap_x;
+			coord->y1 = i * data->gap_y;
+			isometric(&coord->x1, &coord->y1, data->line[i][j + 1]);
 		//	printf("post iso : x1 : %d, y1 : %d\n", coord->x1, coord->y1);
-			drawline_bres(data, coord->x0 + 250, coord->y0 + 100, coord->x1 + 250, coord->y1 + 100);
+			drawline_bres(data, coord->x0 + 400, coord->y0 + 100, coord->x1 + 400, coord->y1 + 100);
 			j++;
 		}
 		i++;
@@ -140,15 +140,15 @@ void	vertical_lines(t_data *data) // PBBBBB
 		i = 0;
 		while (i < data->nbr_lines - 1)
 		{
-			coord->x0 = j * 25;
-			coord->y0 = i * 25;
-			isometric(&coord->x0, &coord->y0);
+			coord->x0 = j * data->gap_x;
+			coord->y0 = i * data->gap_y;
+			isometric(&coord->x0, &coord->y0, data->line[i][j]);
 	//		printf("post iso : x0 : %d, y0 : %d\n", coord->x0, coord->y0);
 			coord->x1 = j * 25;
 			coord->y1 = (i + 1) * 25;
-			isometric(&coord->x1, &coord->y1);
+			isometric(&coord->x1, &coord->y1, data->line[i + 1][j]);
 	//		printf("post iso : x1 : %d, y1 : %d\n", coord->x1, coord->y1);
-			drawline_bres(data, coord->x0 + 250, coord->y0 + 100, coord->x1 + 250, coord->y1 + 100);
+			drawline_bres(data, coord->x0 + 400, coord->y0 + 100, coord->x1 + 400, coord->y1 + 100);
 
 			i++;
 		}
