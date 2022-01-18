@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 09:50:13 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/01/17 17:01:10 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/01/18 12:06:02 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ t_data	*data_init(char *av1)
 	data->gap_y = 25;
 	data->line = ft_parse(av1, data);
 	data->mlx_ptr = mlx_init();
+	if (!data->mlx_ptr)
+		exit(0);
 	data->win_ptr = mlx_new_window(data->mlx_ptr, data->size_x, data->size_y, "titre");
 	return (data);
 }

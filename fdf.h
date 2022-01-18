@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 09:49:51 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/01/17 17:01:43 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/01/18 11:10:56 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_data
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
+	void	*img_ptr;
 	int		**line;
 	int		nbr_lines;
 	int		nbr_col;
@@ -51,6 +52,10 @@ typedef struct s_colors
 t_colors	*colors_init(void);
 t_coord	*coord_init(t_data *data);
 t_data	*data_init(char *av1);
+void	vertical_lines(t_data *data);
+void    horiz_lines(t_data *data);
+void 	drawline(t_data *data, int x0, int y0, int x1, int y1);
+void 	drawline_vertic(t_data *data, int x0, int y0, int x1, int y1);
 void	isometric(int *x, int *y);
 void	ft_putchar(char c);
 void	ft_putnbr(int nb);
