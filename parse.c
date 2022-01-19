@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 09:49:58 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/01/17 14:40:29 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/01/19 14:46:04 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,12 @@ int	*ft_to_int(char *str, int nbr_int)
 		while (str[j] == 32)
 			j++;
 		tab[i] = ft_atoi((const char *)&str[j]);
-//		printf("%d  ", tab[i]);
+		printf("%d  ", tab[i]);
 		j += size_int(tab[i]);
 		i++;
 		nbr_int--;
 	}
-//	printf("\n");
+	printf("\n");
 	return (tab);
 }
 

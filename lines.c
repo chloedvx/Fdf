@@ -6,13 +6,13 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 10:18:17 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/01/18 17:24:47 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/01/19 14:44:47 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	draw_line_bres_low(t_data *data, int x_0, int y_0, int x_1, int y_1)
+void	draw_line_bres_low(t_img *img, int x_0, int y_0, int x_1, int y_1)
 {
 	int	dx;
 	int	dy;
@@ -30,7 +30,7 @@ void	draw_line_bres_low(t_data *data, int x_0, int y_0, int x_1, int y_1)
     p = 2*dy - dx;
 	while (x_0 <= x_1)
 	{
-		mlx_pixel_put(data->mlx_ptr, data->win_ptr, x_0, y_0,0xFFFFFF);
+		my_mlx_pixel_put(img, x_0, y_0, img->rgb);
 		if (p > 0)
 		{
 			y_0 = y_0 + yi;
@@ -41,7 +41,7 @@ void	draw_line_bres_low(t_data *data, int x_0, int y_0, int x_1, int y_1)
 	}
 }
 
-void	draw_line_bres_hi(t_data *data, int x_0, int y_0, int x_1, int y_1)
+void	draw_line_bres_hi(t_img *img, int x_0, int y_0, int x_1, int y_1)
 {
 	int	dx;
 	int	dy;
@@ -59,7 +59,7 @@ void	draw_line_bres_hi(t_data *data, int x_0, int y_0, int x_1, int y_1)
     p = 2*dx - dy;
 	while (y_0 <= y_1)
 	{
-		mlx_pixel_put(data->mlx_ptr, data->win_ptr, x_0, y_0,0xFFFFFF);
+		my_mlx_pixel_put(img, x_0, y_0, img->rgb);
 		if (p > 0)
 		{
 			x_0 = x_0 + xi;
@@ -70,7 +70,7 @@ void	draw_line_bres_hi(t_data *data, int x_0, int y_0, int x_1, int y_1)
 	}
 }
 
-void	drawline_bres(t_data *data, int x_0, int y_0, int x_1, int y_1)
+void	drawline_bres(t_img *img, int x_0, int y_0, int x_1, int y_1)
 {
 	int dx;
 	int dy;
@@ -81,20 +81,20 @@ void	drawline_bres(t_data *data, int x_0, int y_0, int x_1, int y_1)
 	if (dy < dx)
 	{
 		if (x_0 > x_1)
-			draw_line_bres_low(data, x_1, y_1, x_0, y_0);
+			draw_line_bres_low(img, x_1, y_1, x_0, y_0);
 		else
-			draw_line_bres_low(data, x_0, y_0, x_1, y_1);
+			draw_line_bres_low(img, x_0, y_0, x_1, y_1);
 	}
 	else
 	{
 		if (y_0 > y_1)
-			draw_line_bres_hi(data, x_1, y_1, x_0, y_0);
+			draw_line_bres_hi(img, x_1, y_1, x_0, y_0);
 		else
-			draw_line_bres_hi(data, x_0, y_0, x_1, y_1);
+			draw_line_bres_hi(img, x_0, y_0, x_1, y_1);
 	}
 }
 
-void	horiz_lines(t_data *data)
+void	horiz_lines(t_data *data, t_img *img)
 {
 	int	i;
 	int	j;
@@ -115,7 +115,7 @@ void	horiz_lines(t_data *data)
 			coord->x1 = (j + 1) * data->gap_x;
 			coord->y1 = i * data->gap_y;
 			isometric(&coord->x1, &coord->y1, data->line[i][j + 1]);
-			drawline_bres(data, coord->x0 + data->start_x, coord->y0 + data->start_y, coord->x1 + data->start_x, coord->y1 + data->start_y);
+			drawline_bres(img, coord->x0 + data->start_x, coord->y0 + data->start_y, coord->x1 + data->start_x, coord->y1 + data->start_y);
 			j++;
 		}
 		i++;
@@ -123,7 +123,7 @@ void	horiz_lines(t_data *data)
 	free(coord);
 }
 
-void	vertical_lines(t_data *data)
+void	vertical_lines(t_data *data, t_img *img)
 {
 	int	i;
 	int	j;
@@ -144,7 +144,7 @@ void	vertical_lines(t_data *data)
 			coord->x1 = j * data->gap_x;
 			coord->y1 = (i + 1) * data->gap_y;
 			isometric(&coord->x1, &coord->y1, data->line[i + 1][j]);
-			drawline_bres(data, coord->x0 + data->start_x, coord->y0 + data->start_y, coord->x1 + data->start_x, coord->y1 + data->start_y);
+			drawline_bres(img, coord->x0 + data->start_x, coord->y0 + data->start_y, coord->x1 + data->start_x, coord->y1 + data->start_y);
 			i++;
 		}
 		j++;

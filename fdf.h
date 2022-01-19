@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 09:49:51 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/01/18 17:24:50 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/01/19 14:42:55 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ typedef struct s_data
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
-	void	*img_ptr;
 	int		**line;
 	int		nbr_lines;
 	int		nbr_col;
@@ -44,18 +43,25 @@ typedef struct s_data
 	int		start_y;
 } t_data;
 
-typedef struct s_colors
+typedef struct s_img
 {
-	int	R;
-	int	G;
-	int	B;
-} t_colors;
+	void	*img_ptr;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	int	r;
+	int	g;
+	int	b;
+	int	rgb;
+} t_img;
 
-t_colors	*colors_init(void);
 t_coord		*coord_init(t_data *data);
 t_data		*data_init(char *av1);
-void	vertical_lines(t_data *data);
-void    horiz_lines(t_data *data);
+t_img		img_init(t_data *data);
+void		my_mlx_pixel_put(t_img *img, int x, int y, int color);
+void	vertical_lines(t_data *data, t_img *img);
+void    horiz_lines(t_data *data, t_img *img);
 void	isometric(int *x, int *y, int z);
 void	ft_putchar(char c);
 void	ft_putnbr(int nb);
