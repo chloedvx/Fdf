@@ -47,18 +47,31 @@ t_data	*data_init(char *av1)
 		free(str);
 	}
 	close (fd);
-	data->size_x = data->nbr_col * 40;//50
-	data->size_y = data->nbr_lines * 50;
+	data->size_x = data->nbr_col * 20;//50
+	data->size_y = data->nbr_lines * 20;
 	printf("col : %d, line : %d\n", data->nbr_col, data->nbr_lines);
-	data->gap_x = 25;//25
-	data->gap_y = 25;
+	data->gap_x = 5;//25
+	data->gap_y = 5;
 	data->start_x = data->size_x / 2;
 	data->start_y = data->size_y / 10;
 	data->line = ft_parse(av1, data);
 	return (data);
 }
 
-t_img	img_init(t_data *data)
+void	ft_free(int **line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		free(line[i]);
+		i++;
+	}
+	free(line);
+}
+
+/*t_img	img_init(t_data *data)
 {
 	t_img	img;
 		
@@ -69,4 +82,4 @@ t_img	img_init(t_data *data)
 	img.b = 255;
 	img.rgb = create_trgb(img.r, img.g, img.b);
 	return (img);
-}
+}*/

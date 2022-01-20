@@ -39,21 +39,30 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 
 int	fdf(t_data *data)
 {
-	t_img	img;
+	t_img	*img;
+	img = malloc(sizeof(t_img));
+	if (!img)
+		return (0);
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
 		exit(0);
 	data->win_ptr = mlx_new_window(data->mlx_ptr, data->size_x, data->size_y, "Fdf");
 	if (!data->win_ptr)
 		exit(0);
-	img = img_init(data);
-	printf("%d\n", img.rgb);
-	vertical_lines(data, &img);
-	horiz_lines(data, &img); 
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, img.img_ptr, 0, 0);
+	//img = img_init(data);
+	img->img_ptr = mlx_new_image(data->mlx_ptr, data->size_x, data->size_y);
+	img->addr = mlx_get_data_addr(img->img_ptr, &img->bits_per_pixel, &img->line_length, &img->endian);
+	img->r = 255;
+	img->g = 255;
+	img->b = 255;
+	img->rgb = create_trgb(img->r, img->g, img->b);
+	vertical_lines(data, img);
+	horiz_lines(data, img); 
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, img->img_ptr, 0, 0);
 	mlx_key_hook(data->win_ptr, ft_key_hook, data);
 //	mlx_expose_hook(data->win_ptr, ft_expose_hook, data);
 	mlx_loop(data->mlx_ptr);
+//	free(img);
 	return (0);
 }
 
@@ -61,10 +70,11 @@ int	main(int ac, char **av)
 {
 	t_data		*data;
 
+	while (1);
 	(void)ac;
 	data = data_init(av[1]);
 	fdf(data);
-	//free line
+	ft_free(data->line);
 	free(data);
 	return (0);
 }
