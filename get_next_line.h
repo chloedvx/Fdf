@@ -17,7 +17,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
-#define BUFFER_SIZE 20
+# define BUFFER_SIZE 20
 
 char	*get_next_line(int fd);
 char	*get_next_line2(char **temp, int fd);

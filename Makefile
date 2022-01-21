@@ -16,7 +16,7 @@ OBJS = ${SRCS:.c=.o}
 	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
 ${NAME}:	${OBJS}
-	${CC} -L ${LIB_DIR} -lmlx -framework OpenGL -framework AppKit ${OBJS} -o ${NAME} -g3 -fsanitize=address -D BUFFER_SIZE=20
+	${CC} -L ${LIB_DIR} -lmlx -framework OpenGL -framework AppKit ${OBJS} -o ${NAME} -g3 -fsanitize=address
 
 all: ${NAME}
 
