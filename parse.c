@@ -21,7 +21,7 @@ int	line_size(char *str)
 	size = 0;
 	if (!str)
 		return (0);
-	while(str[i] != '\n')
+	while(str[i] != '\n' && str[i] != '\0')
 	{
 		if (str[i] == 32)	
 			size++;
@@ -64,12 +64,12 @@ int	*ft_to_int(char *str, int nbr_int)
 		while (str[j] == 32)
 			j++;
 		tab[i] = ft_atoi((const char *)&str[j]);
-//		printf("%d  ", tab[i]);
+		//printf("%d, ", tab[i]);
 		j += size_int(tab[i]);
 		i++;
 		nbr_int--;
 	}
-//	printf("\n");
+	//printf("\n");
 	return (tab);
 }
 
