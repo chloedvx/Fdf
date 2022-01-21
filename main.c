@@ -34,8 +34,9 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 
 	if ((x < img->x && x > 0) && (y < img->y && y > 0))
 	{
-		dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
-		*(unsigned int*)dst = color;
+		dst = img->addr + (y * img->line_length + x
+				*(img->bits_per_pixel / 8));
+		*(unsigned int *)dst = color;
 	}
 }
 
@@ -46,14 +47,15 @@ int	fdf(t_data *data)
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
 		exit(EXIT_FAILURE);
-	data->win_ptr = mlx_new_window(data->mlx_ptr, data->size_x, data->size_y, "Fdf");
+	data->win_ptr = mlx_new_window(data->mlx_ptr,
+			data->size_x, data->size_y, "Fdf");
 	if (!data->win_ptr)
 		exit(EXIT_FAILURE);
 	img = img_init(data);
 	mlx_key_hook(data->win_ptr, ft_key_hook, data);
 //	mlx_expose_hook(data->win_ptr, ft_expose_hook, data);
 	vertical_lines(data, img);
-	horiz_lines(data, img); 
+	horiz_lines(data, img);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, img->img_ptr, 0, 0);
 	mlx_loop(data->mlx_ptr);
 	free(img);

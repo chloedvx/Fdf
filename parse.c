@@ -16,14 +16,14 @@ int	line_size(char *str)
 {
 	int	size;
 	int	i;
-	
+
 	i = 0;
 	size = 0;
 	if (!str)
 		return (0);
-	while(str[i] != '\n' && str[i] != '\0')
+	while (str[i] != '\n' && str[i] != '\0')
 	{
-		if (str[i] == 32)	
+		if (str[i] == 32)
 			size++;
 		i++;
 	}
@@ -77,10 +77,12 @@ int	**ft_parse(char *path, t_data *data)
 {
 	int		i;
 	int		fd;
+	int		j;
 	char	*str;
 	int		**tmp;
 
 	i = 0;
+	j = 0;
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 	{
@@ -88,12 +90,16 @@ int	**ft_parse(char *path, t_data *data)
 		return (0);
 	}
 	tmp = malloc(sizeof(int *) * data->nbr_lines);
-	while ((str = get_next_line(fd)) != NULL)
+	while (j == i)
 	{
-		tmp[i] = ft_to_int(str, data->nbr_col);
-		i++;
+		str = get_next_line(fd);
+		if (str != NULL)
+		{
+			tmp[i] = ft_to_int(str, data->nbr_col);
+			i++;
+		}
+		j++;
 		free(str);
-		str = NULL;
 	}
 	close(fd);
 	return (tmp);

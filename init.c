@@ -41,19 +41,19 @@ t_data	*data_init(char *av1)
 	if (!data)
 		return (0);
 	data->nbr_lines = 0;
-	while (i == 0)
+	while (i == data->nbr_lines)
 	{
 		str = get_next_line(fd);
-		if (str)
+		if (str != NULL)
 		{
 			data->nbr_lines++;
 			data->nbr_col = line_size(str);
 		}
-		else
-			i++;
+		i++;
 		free(str);
 	}
 	close (fd);
+	printf("col : %d, lines : %d\n", data->nbr_col, data->nbr_lines);
 	data->size_x = 1044;
 	data->size_y = 700;
 	data->gap = 5;
