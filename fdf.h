@@ -37,8 +37,7 @@ typedef struct s_data
 	int		nbr_col;
 	int		size_x;
 	int		size_y;
-	int		gap_x;
-	int		gap_y;
+	int		gap;
 	int		start_x;
 	int		start_y;
 } t_data;
@@ -50,6 +49,8 @@ typedef struct s_img
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+	int	x;
+	int	y;
 	int	r;
 	int	g;
 	int	b;
@@ -58,7 +59,7 @@ typedef struct s_img
 
 t_coord		*coord_init(t_data *data);
 t_data		*data_init(char *av1);
-//t_img		img_init(t_data *data);
+t_img		*img_init(t_data *data);
 void		ft_free(int **line);
 int			create_trgb(int r, int g, int b);
 void		my_mlx_pixel_put(t_img *img, int x, int y, int color);

@@ -21,7 +21,7 @@ void	isometric(int *x,int *y, int z)
 	pre_x = *x;
 	pre_y = *y;
 	*x = (pre_x - pre_y) * cos(0.8);
-	*y = (pre_x + pre_y) * sin (0.8) - z;/// 2;
+	*y = (pre_x + pre_y) * sin (0.8) - z;
 }
 
 int	create_trgb(int r, int g, int b)
@@ -47,11 +47,10 @@ t_data	*data_init(char *av1)
 		free(str);
 	}
 	close (fd);
-	data->size_x = data->nbr_col * 20;//50
-	data->size_y = data->nbr_lines * 20;
+	data->size_x = 1044;
+	data->size_y = 700;
 	printf("col : %d, line : %d\n", data->nbr_col, data->nbr_lines);
-	data->gap_x = 5;//25
-	data->gap_y = 5;
+	data->gap = 5;//25
 	data->start_x = data->size_x / 2;
 	data->start_y = data->size_y / 10;
 	data->line = ft_parse(av1, data);
@@ -71,15 +70,23 @@ void	ft_free(int **line)
 	free(line);
 }
 
-/*t_img	img_init(t_data *data)
+t_img	*img_init(t_data *data)
 {
-	t_img	img;
-		
-	img.img_ptr = mlx_new_image(data->mlx_ptr, data->size_x, data->size_y);
-	img.addr = mlx_get_data_addr(img.img_ptr, &img.bits_per_pixel, &img.line_length, &img.endian);
-	img.r = 255;
-	img.g = 255;
-	img.b = 255;
-	img.rgb = create_trgb(img.r, img.g, img.b);
+	t_img	*img;
+	img = malloc(sizeof(t_img));
+	if (!img)
+		return (0);
+	img->x = data->size_x;
+	img->y = data->size_y;
+	img->img_ptr = mlx_new_image(data->mlx_ptr, img->x, img->y);
+	if (!img->img_ptr)
+		exit(EXIT_FAILURE);
+	img->addr = mlx_get_data_addr(img->img_ptr, &img->bits_per_pixel, &img->line_length, &img->endian);
+	if (!img->addr)
+		exit(EXIT_FAILURE);
+	img->r = 0;
+	img->g = 255;
+	img->b = 0;
+	img->rgb = create_trgb(img->r, img->g, img->b);
 	return (img);
-}*/
+}

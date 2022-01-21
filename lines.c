@@ -109,11 +109,11 @@ void	horiz_lines(t_data *data, t_img *img)
 		j = 0;
 		while (j < data->nbr_col - 1)
 		{
-			coord->x0 = j * data->gap_x;
-			coord->y0 = i * data->gap_y;
+			coord->x0 = j * data->gap;
+			coord->y0 = i * data->gap;
 			isometric(&coord->x0, &coord->y0, data->line[i][j]);
-			coord->x1 = (j + 1) * data->gap_x;
-			coord->y1 = i * data->gap_y;
+			coord->x1 = (j + 1) * data->gap;
+			coord->y1 = i * data->gap;
 			isometric(&coord->x1, &coord->y1, data->line[i][j + 1]);
 			drawline_bres(img, coord->x0 + data->start_x, coord->y0 + data->start_y, coord->x1 + data->start_x, coord->y1 + data->start_y);
 			j++;
@@ -138,11 +138,11 @@ void	vertical_lines(t_data *data, t_img *img)
 		i = 0;
 		while (i < data->nbr_lines - 1)
 		{
-			coord->x0 = j * data->gap_x;
-			coord->y0 = i * data->gap_y;
+			coord->x0 = j * data->gap;
+			coord->y0 = i * data->gap;
 			isometric(&coord->x0, &coord->y0, data->line[i][j]);
-			coord->x1 = j * data->gap_x;
-			coord->y1 = (i + 1) * data->gap_y;
+			coord->x1 = j * data->gap;
+			coord->y1 = (i + 1) * data->gap;
 			isometric(&coord->x1, &coord->y1, data->line[i + 1][j]);
 			drawline_bres(img, coord->x0 + data->start_x, coord->y0 + data->start_y, coord->x1 + data->start_x, coord->y1 + data->start_y);
 			i++;
