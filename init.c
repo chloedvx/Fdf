@@ -12,11 +12,10 @@
 
 #include "fdf.h"
 
-void	isometric(int *x,int *y, int z)
+void	isometric(int *x, int *y, int z)
 {
-
-	int pre_x;
-	int pre_y;
+	int	pre_x;
+	int	pre_y;
 
 	pre_x = *x;
 	pre_y = *y;
@@ -33,24 +32,31 @@ t_data	*data_init(char *av1)
 {
 	t_data	*data;
 	int		fd;
+	int		i;
 	char	*str;
 
+	i = 0;
 	fd = open(av1, O_RDONLY);
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (0);
 	data->nbr_lines = 0;
-	while ((str = get_next_line(fd)) != NULL)
+	while (i == 0)
 	{
-		data->nbr_lines++;
-		data->nbr_col = line_size(str);
+		str = get_next_line(fd);
+		if (str)
+		{
+			data->nbr_lines++;
+			data->nbr_col = line_size(str);
+		}
+		else
+			i++;
 		free(str);
 	}
 	close (fd);
 	data->size_x = 1044;
 	data->size_y = 700;
-	printf("col : %d, line : %d\n", data->nbr_col, data->nbr_lines);
-	data->gap = 5;//25
+	data->gap = 5;
 	data->start_x = data->size_x / 2;
 	data->start_y = data->size_y / 10;
 	data->line = ft_parse(av1, data);
@@ -73,6 +79,7 @@ void	ft_free(int **line)
 t_img	*img_init(t_data *data)
 {
 	t_img	*img;
+
 	img = malloc(sizeof(t_img));
 	if (!img)
 		return (0);
@@ -81,7 +88,8 @@ t_img	*img_init(t_data *data)
 	img->img_ptr = mlx_new_image(data->mlx_ptr, img->x, img->y);
 	if (!img->img_ptr)
 		exit(EXIT_FAILURE);
-	img->addr = mlx_get_data_addr(img->img_ptr, &img->bits_per_pixel, &img->line_length, &img->endian);
+	img->addr = mlx_get_data_addr(img->img_ptr, &img->bits_per_pixel,
+			&img->line_length, &img->endian);
 	if (!img->addr)
 		exit(EXIT_FAILURE);
 	img->r = 0;

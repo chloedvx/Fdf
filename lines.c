@@ -21,22 +21,22 @@ void	draw_line_bres_low(t_img *img, int x_0, int y_0, int x_1, int y_1)
 
 	dx = x_1 - x_0;
 	dy = y_1 - y_0;
-    yi = 1;
-    if (dy < 0)
+	yi = 1;
+	if (dy < 0)
 	{
 		yi = -1;
 		dy = -dy;
 	}
-    p = 2*dy - dx;
+	p = 2 * dy - dx;
 	while (x_0 <= x_1)
 	{
 		my_mlx_pixel_put(img, x_0, y_0, img->rgb);
 		if (p > 0)
 		{
 			y_0 = y_0 + yi;
-			p = p - 2*dx;
+			p = p - 2 * dx;
 		}
-		p = p + 2*dy;
+		p = p + 2 * dy;
 		x_0++;
 	}
 }
@@ -50,34 +50,37 @@ void	draw_line_bres_hi(t_img *img, int x_0, int y_0, int x_1, int y_1)
 
 	dx = x_1 - x_0;
 	dy = y_1 - y_0;
-    xi = 1;
-    if (dx < 0)
+	xi = 1;
+	if (dx < 0)
 	{
 		xi = -1;
 		dx = -dx;
 	}
-    p = 2*dx - dy;
+	p = 2 * dx - dy;
 	while (y_0 <= y_1)
 	{
 		my_mlx_pixel_put(img, x_0, y_0, img->rgb);
 		if (p > 0)
 		{
 			x_0 = x_0 + xi;
-			p = p - 2*dy;
+			p = p - 2 * dy;
 		}
-		p = p + 2*dx;
+		p = p + 2 * dx;
 		y_0++;
 	}
 }
 
-void	drawline_bres(t_img *img, int x_0, int y_0, int x_1, int y_1)
+void	draw(t_img *img, int x_0, int y_0, int x_1, int y_1)
 {
-	int dx;
-	int dy;
+	int	dx;
+	int	dy;
 
-	dx = ((x_1 - x_0) > 0) ? (x_1 - x_0) : -(x_1 - x_0);
-	dy = ((y_1 - y_0) > 0) ? (y_1 - y_0) : -(y_1 - y_0);
-
+	dx = x_1 - x_0;
+	dy = y_1 - y_0;
+	if (dx < 0)
+		dx *= -1;
+	if (dy < 0)
+		dy *= -1;
 	if (dy < dx)
 	{
 		if (x_0 > x_1)
@@ -96,8 +99,8 @@ void	drawline_bres(t_img *img, int x_0, int y_0, int x_1, int y_1)
 
 void	horiz_lines(t_data *data, t_img *img)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	t_coord	*coord;
 
 	i = 0;
@@ -115,7 +118,8 @@ void	horiz_lines(t_data *data, t_img *img)
 			coord->x1 = (j + 1) * data->gap;
 			coord->y1 = i * data->gap;
 			isometric(&coord->x1, &coord->y1, data->line[i][j + 1]);
-			drawline_bres(img, coord->x0 + data->start_x, coord->y0 + data->start_y, coord->x1 + data->start_x, coord->y1 + data->start_y);
+			draw(img, coord->x0 + data->start_x, coord->y0 + data->start_y,
+				coord->x1 + data->start_x, coord->y1 + data->start_y); //de toute facon passer moins d'arguments
 			j++;
 		}
 		i++;
@@ -125,8 +129,8 @@ void	horiz_lines(t_data *data, t_img *img)
 
 void	vertical_lines(t_data *data, t_img *img)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	t_coord	*coord;
 
 	j = 0;
@@ -144,7 +148,7 @@ void	vertical_lines(t_data *data, t_img *img)
 			coord->x1 = j * data->gap;
 			coord->y1 = (i + 1) * data->gap;
 			isometric(&coord->x1, &coord->y1, data->line[i + 1][j]);
-			drawline_bres(img, coord->x0 + data->start_x, coord->y0 + data->start_y, coord->x1 + data->start_x, coord->y1 + data->start_y);
+			draw(img, coord->x0 + data->start_x, coord->y0 + data->start_y, coord->x1 + data->start_x, coord->y1 + data->start_y);
 			i++;
 		}
 		j++;

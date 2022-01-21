@@ -64,7 +64,7 @@ int	*ft_to_int(char *str, int nbr_int)
 		while (str[j] == 32)
 			j++;
 		tab[i] = ft_atoi((const char *)&str[j]);
-		//printf("%d, ", tab[i]);
+	//	printf("%d, ", tab[i]);
 		j += size_int(tab[i]);
 		i++;
 		nbr_int--;
