@@ -1,4 +1,4 @@
-SRCS = ft_split.c get_next_line.c get_next_line_utils.c init.c main.c parse.c utils.c lines.c
+SRCS = ft_split.c get_next_line.c get_next_line_utils.c init.c main.c parse.c utils.c lines.c utils2.c
 
 NAME = fdf
 

@@ -12,20 +12,22 @@
 
 #include "fdf.h"
 
-void	isometric(int *x, int *y, int z)
+void	data_init2(t_data *data)
 {
-	int	pre_x;
-	int	pre_y;
-
-	pre_x = *x;
-	pre_y = *y;
-	*x = (pre_x - pre_y) * cos(0.8);
-	*y = (pre_x + pre_y) * sin (0.8) - z;
-}
-
-int	create_trgb(int r, int g, int b)
-{
-	return (r << 16 | g << 8 | b);
+	data->size_x = 1044;
+	data->size_y = 700;
+	if (data->nbr_lines <= 10 || data->nbr_col <= 10)
+		data->gap = 25;
+	if (data->nbr_lines >= 20 || data->nbr_col >= 20)
+		data->gap = 10;
+	if (data->nbr_lines >= 100 || data->nbr_col >= 100)
+		data->gap = 5;
+	if (data->nbr_lines >= 200 || data->nbr_col >= 200)
+		data->gap = 3;
+	if (data->nbr_lines >= 400 || data->nbr_col >= 400)
+		data->gap = 1;
+	data->start_x = data->size_x / 2;
+	data->start_y = 0;
 }
 
 t_data	*data_init(char *av1)
@@ -35,13 +37,13 @@ t_data	*data_init(char *av1)
 	int		i;
 	char	*str;
 
-	i = 0;
+	i = -1;
 	fd = open(av1, O_RDONLY);
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (0);
 	data->nbr_lines = 0;
-	while (i == data->nbr_lines)
+	while (++i == data->nbr_lines)
 	{
 		str = get_next_line(fd);
 		if (str != NULL)
@@ -49,17 +51,11 @@ t_data	*data_init(char *av1)
 			data->nbr_lines++;
 			data->nbr_col = line_size(str);
 		}
-		i++;
 		free(str);
 	}
 	close (fd);
-	printf("col : %d, lines : %d\n", data->nbr_col, data->nbr_lines);
-	data->size_x = 1044;
-	data->size_y = 700;
-	data->gap = 5;
-	data->start_x = data->size_x / 2;
-	data->start_y = data->size_y / 10;
 	data->line = ft_parse(av1, data);
+	data_init2(data);
 	return (data);
 }
 
@@ -85,6 +81,7 @@ t_img	*img_init(t_data *data)
 		return (0);
 	img->x = data->size_x;
 	img->y = data->size_y;
+	img->mlx_ptr = data->mlx_ptr;
 	img->img_ptr = mlx_new_image(data->mlx_ptr, img->x, img->y);
 	if (!img->img_ptr)
 		exit(EXIT_FAILURE);

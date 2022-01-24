@@ -85,10 +85,7 @@ int	**ft_parse(char *path, t_data *data)
 	j = 0;
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
-	{
-		write(1, "Cannot read file.", 17);
-		return (0);
-	}
+		ft_error("Cannot acess file");
 	tmp = malloc(sizeof(int *) * data->nbr_lines);
 	while (j == i)
 	{

@@ -51,3 +51,26 @@ int	ft_atoi(const char *str)
 	nb *= sign;
 	return (nb);
 }
+
+void	ft_swap(t_coord *coord)
+{
+	int	x;
+	int	y;
+
+	x = coord->x0;
+	coord->x0 = coord->x1;
+	coord->x1 = x;
+	y = coord->y0;
+	coord->y0 = coord->y1;
+	coord->y1 = y;
+}
+
+int	ft_diff(int x0, int x1)
+{
+	int	dx;
+
+	dx = x1 - x0;
+	if (dx < 0)
+		dx *= -1;
+	return (dx);
+}

@@ -12,15 +12,15 @@
 
 #include "fdf.h"
 
-void	draw_line_bres_low(t_img *img, int x_0, int y_0, int x_1, int y_1)
+void	draw_line_bres_low(t_img *img, t_coord *coord)
 {
 	int	dx;
 	int	dy;
 	int	yi;
 	int	p;
 
-	dx = x_1 - x_0;
-	dy = y_1 - y_0;
+	dx = coord->x1 - coord->x0;
+	dy = coord->y1 - coord->y0;
 	yi = 1;
 	if (dy < 0)
 	{
@@ -28,28 +28,28 @@ void	draw_line_bres_low(t_img *img, int x_0, int y_0, int x_1, int y_1)
 		dy = -dy;
 	}
 	p = 2 * dy - dx;
-	while (x_0 <= x_1)
+	while (coord->x0 <= coord->x1)
 	{
-		my_mlx_pixel_put(img, x_0, y_0, img->rgb);
+		my_mlx_pixel_put(img, coord->x0, coord->y0, img->rgb);
 		if (p > 0)
 		{
-			y_0 = y_0 + yi;
+			coord->y0 += yi;
 			p = p - 2 * dx;
 		}
 		p = p + 2 * dy;
-		x_0++;
+		coord->x0++;
 	}
 }
 
-void	draw_line_bres_hi(t_img *img, int x_0, int y_0, int x_1, int y_1)
+void	draw_line_bres_hi(t_img *img, t_coord *coord)
 {
 	int	dx;
 	int	dy;
 	int	xi;
 	int	p;
 
-	dx = x_1 - x_0;
-	dy = y_1 - y_0;
+	dx = coord->x1 - coord->x0;
+	dy = coord->y1 - coord->y0;
 	xi = 1;
 	if (dx < 0)
 	{
@@ -57,43 +57,45 @@ void	draw_line_bres_hi(t_img *img, int x_0, int y_0, int x_1, int y_1)
 		dx = -dx;
 	}
 	p = 2 * dx - dy;
-	while (y_0 <= y_1)
+	while (coord->y0 <= coord->y1)
 	{
-		my_mlx_pixel_put(img, x_0, y_0, img->rgb);
+		my_mlx_pixel_put(img, coord->x0, coord->y0, img->rgb);
 		if (p > 0)
 		{
-			x_0 = x_0 + xi;
+			coord->x0 += xi;
 			p = p - 2 * dy;
 		}
 		p = p + 2 * dx;
-		y_0++;
+		coord->y0++;
 	}
 }
 
-void	draw(t_img *img, int x_0, int y_0, int x_1, int y_1)
+void	draw(t_img *img, t_coord *coord)
 {
 	int	dx;
 	int	dy;
 
-	dx = x_1 - x_0;
-	dy = y_1 - y_0;
-	if (dx < 0)
-		dx *= -1;
-	if (dy < 0)
-		dy *= -1;
+	dx = ft_diff(coord->x0, coord->x1);
+	dy = ft_diff(coord->y0, coord->y1);
 	if (dy < dx)
 	{
-		if (x_0 > x_1)
-			draw_line_bres_low(img, x_1, y_1, x_0, y_0);
+		if (coord->x0 > coord->x1)
+		{
+			ft_swap(coord);
+			draw_line_bres_low(img, coord);
+		}
 		else
-			draw_line_bres_low(img, x_0, y_0, x_1, y_1);
+			draw_line_bres_low(img, coord);
 	}
 	else
 	{
-		if (y_0 > y_1)
-			draw_line_bres_hi(img, x_1, y_1, x_0, y_0);
+		if (coord->y0 > coord->y1)
+		{
+			ft_swap(coord);
+			draw_line_bres_hi(img, coord);
+		}
 		else
-			draw_line_bres_hi(img, x_0, y_0, x_1, y_1);
+			draw_line_bres_hi(img, coord);
 	}
 }
 
@@ -109,8 +111,8 @@ void	horiz_lines(t_data *data, t_img *img)
 		exit(0);
 	while (i < data->nbr_lines)
 	{
-		j = 0;
-		while (j < data->nbr_col - 1)
+		j = -1;
+		while (++j < data->nbr_col - 1)
 		{
 			coord->x0 = j * data->gap;
 			coord->y0 = i * data->gap;
@@ -118,9 +120,8 @@ void	horiz_lines(t_data *data, t_img *img)
 			coord->x1 = (j + 1) * data->gap;
 			coord->y1 = i * data->gap;
 			isometric(&coord->x1, &coord->y1, data->line[i][j + 1]);
-			draw(img, coord->x0 + data->start_x, coord->y0 + data->start_y,
-				coord->x1 + data->start_x, coord->y1 + data->start_y); //de toute facon passer moins d'arguments
-			j++;
+			ft_append(coord, data);
+			draw(img, coord);
 		}
 		i++;
 	}
@@ -139,8 +140,8 @@ void	vertical_lines(t_data *data, t_img *img)
 		exit(0);
 	while (j < data->nbr_col)
 	{
-		i = 0;
-		while (i < data->nbr_lines - 1)
+		i = -1;
+		while (++i < data->nbr_lines - 1)
 		{
 			coord->x0 = j * data->gap;
 			coord->y0 = i * data->gap;
@@ -148,8 +149,8 @@ void	vertical_lines(t_data *data, t_img *img)
 			coord->x1 = j * data->gap;
 			coord->y1 = (i + 1) * data->gap;
 			isometric(&coord->x1, &coord->y1, data->line[i + 1][j]);
-			draw(img, coord->x0 + data->start_x, coord->y0 + data->start_y, coord->x1 + data->start_x, coord->y1 + data->start_y);
-			i++;
+			ft_append(coord, data);
+			draw(img, coord);
 		}
 		j++;
 	}
