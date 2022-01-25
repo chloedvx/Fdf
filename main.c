@@ -21,9 +21,9 @@ int	ft_key_hook(int key, t_data *data)
 		exit(0);
 	}
 	else if (key == 24)
-		data->gap += 5;
+		data->gap += 2;
 	else if (key == 27)
-		data->gap -= 5;
+		data->gap -= 2;
 	else if (key == 124)
 		data->start_x += 5;
 	else if (key == 123)
