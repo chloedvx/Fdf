@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-void	draw_line_bres_low(t_img *img, t_coord *coord)
+void	draw_line_bres_low(t_data *data, t_coord *coord)
 {
 	int	dx;
 	int	dy;
@@ -30,7 +30,7 @@ void	draw_line_bres_low(t_img *img, t_coord *coord)
 	p = 2 * dy - dx;
 	while (coord->x0 <= coord->x1)
 	{
-		my_mlx_pixel_put(img, coord->x0, coord->y0, img->rgb);
+		my_mlx_pixel_put(data, coord->x0, coord->y0, data->rgb);
 		if (p > 0)
 		{
 			coord->y0 += yi;
@@ -41,7 +41,7 @@ void	draw_line_bres_low(t_img *img, t_coord *coord)
 	}
 }
 
-void	draw_line_bres_hi(t_img *img, t_coord *coord)
+void	draw_line_bres_hi(t_data *data, t_coord *coord)
 {
 	int	dx;
 	int	dy;
@@ -59,7 +59,7 @@ void	draw_line_bres_hi(t_img *img, t_coord *coord)
 	p = 2 * dx - dy;
 	while (coord->y0 <= coord->y1)
 	{
-		my_mlx_pixel_put(img, coord->x0, coord->y0, img->rgb);
+		my_mlx_pixel_put(data, coord->x0, coord->y0, data->rgb);
 		if (p > 0)
 		{
 			coord->x0 += xi;
@@ -70,7 +70,7 @@ void	draw_line_bres_hi(t_img *img, t_coord *coord)
 	}
 }
 
-void	draw(t_img *img, t_coord *coord)
+void	draw(t_data *data, t_coord *coord)
 {
 	int	dx;
 	int	dy;
@@ -82,24 +82,24 @@ void	draw(t_img *img, t_coord *coord)
 		if (coord->x0 > coord->x1)
 		{
 			ft_swap(coord);
-			draw_line_bres_low(img, coord);
+			draw_line_bres_low(data, coord);
 		}
 		else
-			draw_line_bres_low(img, coord);
+			draw_line_bres_low(data, coord);
 	}
 	else
 	{
 		if (coord->y0 > coord->y1)
 		{
 			ft_swap(coord);
-			draw_line_bres_hi(img, coord);
+			draw_line_bres_hi(data, coord);
 		}
 		else
-			draw_line_bres_hi(img, coord);
+			draw_line_bres_hi(data, coord);
 	}
 }
 
-void	horiz_lines(t_data *data, t_img *img)
+void	horiz_lines(t_data *data)
 {
 	int		i;
 	int		j;
@@ -121,14 +121,14 @@ void	horiz_lines(t_data *data, t_img *img)
 			coord->y1 = i * data->gap;
 			isometric(&coord->x1, &coord->y1, data->line[i][j + 1]);
 			ft_append(coord, data);
-			draw(img, coord);
+			draw(data, coord);
 		}
 		i++;
 	}
 	free(coord);
 }
 
-void	vertical_lines(t_data *data, t_img *img)
+void	vertical_lines(t_data *data)
 {
 	int		i;
 	int		j;
@@ -150,7 +150,7 @@ void	vertical_lines(t_data *data, t_img *img)
 			coord->y1 = (i + 1) * data->gap;
 			isometric(&coord->x1, &coord->y1, data->line[i + 1][j]);
 			ft_append(coord, data);
-			draw(img, coord);
+			draw(data, coord);
 		}
 		j++;
 	}

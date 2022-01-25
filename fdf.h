@@ -40,9 +40,20 @@ typedef struct s_data
 	int		gap;
 	int		start_x;
 	int		start_y;
+	void	*img_ptr;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	int		x;
+	int		y;
+	int		r;
+	int		g;
+	int		b;
+	int		rgb;
 }	t_data;
 
-typedef struct s_img
+/*typedef struct s_img
 {
 	void	*img_ptr;
 	char	*addr;
@@ -56,20 +67,20 @@ typedef struct s_img
 	int		g;
 	int		b;
 	int		rgb;
-}	t_img;
+}	t_img;*/
 
 t_coord	*coord_init(t_data *data);
 t_data	*data_init(char *av1);
-t_img	*img_init(t_data *data);
+//t_img	*img_init(t_data *data);
 void	ft_free(int **line);
 int		create_trgb(int r, int g, int b);
 void	ft_swap(t_coord *coord);
 int		ft_diff(int x0, int x1);
 void	ft_error(char *str);
 void	ft_append(t_coord *coord, t_data *data);
-void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
-void	vertical_lines(t_data *data, t_img *img);
-void	horiz_lines(t_data *data, t_img *img);
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void	vertical_lines(t_data *data);
+void	horiz_lines(t_data *data);
 void	isometric(int *x, int *y, int z);
 void	ft_putchar(char c);
 void	ft_putnbr(int nb);

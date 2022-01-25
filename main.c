@@ -20,40 +20,50 @@ int	ft_key_hook(int key, t_data *data)
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 		exit(0);
 	}
-	if (key == 126)
-	{
-		data->gap += 2;
-	}
+	else if (key == 24)
+		data->gap += 5;
+	else if (key == 27)
+		data->gap -= 5;
+	else if (key == 124)
+		data->start_x += 5;
+	else if (key == 123)
+		data->start_x -= 5;
+	else if (key == 125)
+		data->start_y += 5;
+	else if (key == 126)
+		data->start_y -= 5;
 	return (0);
 }
 
-int	ft_expose_hook(t_img *img)
+int	ft_expose_hook(t_data *data)
 {
-	img->img_ptr = mlx_new_image(img->mlx_ptr, img->x, img->y);
-	if (!img->img_ptr)
+	data->img_ptr = mlx_new_image(data->mlx_ptr, data->size_x, data->size_y);
+	if (!data->img_ptr)
 		exit(EXIT_FAILURE);
-	img->addr = mlx_get_data_addr(img->img_ptr, &img->bits_per_pixel,
-			&img->line_length, &img->endian);
-	if (!img->addr)
+	data->addr = mlx_get_data_addr(data->img_ptr, &data->bits_per_pixel,
+			&data->line_length, &data->endian);
+	if (!data->addr)
 		exit(EXIT_FAILURE);
+	vertical_lines(data);
+	horiz_lines(data);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img_ptr, 0, 0);
 	return (0);
 }
 
-void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
-	if ((x < img->x && x > 0) && (y < img->y && y > 0))
+	if ((x < data->size_x && x > 0) && (y < data->size_y && y > 0))
 	{
-		dst = img->addr + (y * img->line_length + x
-				*(img->bits_per_pixel / 8));
+		dst = data->addr + (y * data->line_length + x
+				*(data->bits_per_pixel / 8));
 		*(unsigned int *)dst = color;
 	}
 }
 
 int	fdf(char *av1)
 {
-	t_img	*img;
 	t_data	*data;
 
 	data = data_init(av1);
@@ -64,16 +74,17 @@ int	fdf(char *av1)
 			data->size_x, data->size_y, "Fdf");
 	if (!data->win_ptr)
 		exit(EXIT_FAILURE);
-	img = img_init(data);
+	data->img_ptr = mlx_new_image(data->mlx_ptr, data->size_x, data->size_y);
+	if (!data->img_ptr)
+		exit(EXIT_FAILURE);
+	data->addr = mlx_get_data_addr(data->img_ptr, &data->bits_per_pixel,
+			&data->line_length, &data->endian);
+	if (!data->addr)
+		exit(EXIT_FAILURE);
 	mlx_key_hook(data->win_ptr, ft_key_hook, data);
-	mlx_expose_hook(data->win_ptr, ft_expose_hook, img);
-	printf("data :%d\n", data->gap);
-	vertical_lines(data, img);
-	horiz_lines(data, img);
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, img->img_ptr, 0, 0);
-	mlx_destroy_image(data->mlx_ptr, img->img_ptr);
+	mlx_expose_hook(data->win_ptr, ft_expose_hook, data);
+	mlx_destroy_image(data->mlx_ptr, data->img_ptr);
 	mlx_loop(data->mlx_ptr);
-	free(img);
 	ft_free(data->line);
 	free(data);
 	return (0);

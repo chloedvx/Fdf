@@ -28,6 +28,10 @@ void	data_init2(t_data *data)
 		data->gap = 1;
 	data->start_x = data->size_x / 2;
 	data->start_y = 0;
+	data->r = 0;
+	data->g = 255;
+	data->b = 0;
+	data->rgb = create_trgb(data->r, data->g, data->b);
 }
 
 t_data	*data_init(char *av1)
@@ -70,28 +74,4 @@ void	ft_free(int **line)
 		i++;
 	}
 	free(line);
-}
-
-t_img	*img_init(t_data *data)
-{
-	t_img	*img;
-
-	img = malloc(sizeof(t_img));
-	if (!img)
-		return (0);
-	img->x = data->size_x;
-	img->y = data->size_y;
-	img->mlx_ptr = data->mlx_ptr;
-	img->img_ptr = mlx_new_image(data->mlx_ptr, img->x, img->y);
-	if (!img->img_ptr)
-		exit(EXIT_FAILURE);
-	img->addr = mlx_get_data_addr(img->img_ptr, &img->bits_per_pixel,
-			&img->line_length, &img->endian);
-	if (!img->addr)
-		exit(EXIT_FAILURE);
-	img->r = 0;
-	img->g = 255;
-	img->b = 0;
-	img->rgb = create_trgb(img->r, img->g, img->b);
-	return (img);
 }
