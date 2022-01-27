@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 09:49:43 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/01/19 14:49:48 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/01/27 09:54:42 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	ft_key_hook(int key, t_data *data)
 {
-	printf("%d\n", key);
 	if (key == 53)
 	{
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
@@ -92,7 +91,8 @@ int	fdf(char *av1)
 
 int	main(int ac, char **av)
 {
-	(void)ac;
+	if (ac != 2)
+		ft_error("Format is : ./fdf map/path");
 	fdf(av[1]);
 	return (0);
 }

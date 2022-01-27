@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 09:50:13 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/01/19 15:01:21 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/01/27 10:01:10 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ void	data_init2(t_data *data)
 	if (data->nbr_lines >= 400 || data->nbr_col >= 400)
 		data->gap = 1;
 	data->start_x = data->size_x / 2;
-	data->start_y = 0;
-	data->r = 0;
+	data->start_y = 50;
+	data->r = 255;
 	data->g = 255;
-	data->b = 0;
+	data->b = 255;
 	data->rgb = create_trgb(data->r, data->g, data->b);
 }
 
