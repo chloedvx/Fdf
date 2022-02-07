@@ -38,14 +38,15 @@ int	ft_expose_hook(t_data *data)
 {
 	data->img_ptr = mlx_new_image(data->mlx_ptr, data->size_x, data->size_y);
 	if (!data->img_ptr)
-		exit(EXIT_FAILURE);
+		return (-1);
 	data->addr = mlx_get_data_addr(data->img_ptr, &data->bits_per_pixel,
 			&data->line_length, &data->endian);
 	if (!data->addr)
-		exit(EXIT_FAILURE);
+		return (-1);
 	vertical_lines(data);
 	horiz_lines(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img_ptr, 0, 0);
+	mlx_destroy_image(data->mlx_ptr, data->img_ptr);
 	return (0);
 }
 
@@ -61,38 +62,38 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	}
 }
 
-int	fdf(char *av1)
+int	fdf(t_data *data)
 {
-	t_data	*data;
-
-	data = data_init(av1);
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
-		exit(EXIT_FAILURE);
+		return (-1);
 	data->win_ptr = mlx_new_window(data->mlx_ptr,
 			data->size_x, data->size_y, "Fdf");
 	if (!data->win_ptr)
-		exit(EXIT_FAILURE);
-	data->img_ptr = mlx_new_image(data->mlx_ptr, data->size_x, data->size_y);
-	if (!data->img_ptr)
-		exit(EXIT_FAILURE);
-	data->addr = mlx_get_data_addr(data->img_ptr, &data->bits_per_pixel,
-			&data->line_length, &data->endian);
-	if (!data->addr)
-		exit(EXIT_FAILURE);
+		return (-1);
 	mlx_key_hook(data->win_ptr, ft_key_hook, data);
 	mlx_expose_hook(data->win_ptr, ft_expose_hook, data);
-	mlx_destroy_image(data->mlx_ptr, data->img_ptr);
 	mlx_loop(data->mlx_ptr);
-	ft_free(data->line);
-	free(data);
 	return (0);
 }
 
 int	main(int ac, char **av)
 {
+	t_data	*data;
+
 	if (ac != 2)
 		ft_error("Format is : ./fdf map/path");
-	fdf(av[1]);
+	data = malloc(sizeof(t_data));
+	data_init(data, av[1]);
+	if (!data)
+		return (-1);
+	if (fdf(data) == -1)
+	{
+		ft_free(data->line);
+		free(data);
+		return (-1);
+	}
+	ft_free(data->line);
+	free(data);
 	return (0);
 }

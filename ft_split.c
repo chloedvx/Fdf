@@ -95,7 +95,7 @@ char	**ft_split(char const *s, char c)
 		while (is_in_c(s[k], c) == 1)
 			k++;
 		dest[i] = ft_sdup(dest[i], &s[k], c);
-		k += len_mot(&s[k], c);
+		k += len_mot(&s[k], c);//protect si null
 		i++;
 	}
 	dest[i] = NULL;
