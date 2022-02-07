@@ -81,22 +81,23 @@ char	**ft_split(char const *s, char c)
 	int		nb_mots;
 	char	**dest;
 
-	i = 0;
+	i = -1;
 	k = 0;
 	nb_mots = nbr_mots(s, c);
 	dest = malloc(sizeof(char *) * (nb_mots + 1));
 	if (!dest)
-	{
-		free(dest);
 		return (NULL);
-	}
-	while (i < nb_mots)
+	while (++i < nb_mots)
 	{
 		while (is_in_c(s[k], c) == 1)
 			k++;
 		dest[i] = ft_sdup(dest[i], &s[k], c);
-		k += len_mot(&s[k], c);//protect si null
-		i++;
+		if (dest[i] == NULL)
+		{
+			free_dest(dest);
+			return (NULL);
+		}
+		k += len_mot(&s[k], c);
 	}
 	dest[i] = NULL;
 	return (dest);

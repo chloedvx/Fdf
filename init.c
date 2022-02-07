@@ -16,6 +16,11 @@ void	data_init2(t_data *data)
 {
 	data->size_x = 1044;
 	data->size_y = 700;
+	if (data->nbr_lines >= 400 || data->nbr_col >= 400)
+	{
+	data->size_x = 1350;
+	data->size_y = 900;
+	}	
 	if (data->nbr_lines <= 10 || data->nbr_col <= 10)
 		data->gap = 25;
 	if (data->nbr_lines >= 20 || data->nbr_col >= 20)
@@ -28,10 +33,6 @@ void	data_init2(t_data *data)
 		data->gap = 1;
 	data->start_x = data->size_x / 2;
 	data->start_y = data->size_y / 10;
-	data->r = 255;
-	data->g = 255;
-	data->b = 255;
-	data->rgb = create_trgb(data->r, data->g, data->b);
 }
 
 void	data_init(t_data *data, char *av1)
@@ -57,17 +58,5 @@ void	data_init(t_data *data, char *av1)
 		return ;
 	ft_parse(av1, data);
 	data_init2(data);
-}
-
-void	ft_free(int **line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i])
-	{
-		free(line[i]);
-		i++;
-	}
-	free(line);
+	fdf(data);
 }

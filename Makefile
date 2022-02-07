@@ -4,11 +4,9 @@ NAME = fdf
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -Imlx
 
 RM = rm -f
-
-LIB_DIR =  /usr/local/lib
 
 OBJS = ${SRCS:.c=.o}
 
@@ -16,7 +14,7 @@ OBJS = ${SRCS:.c=.o}
 	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
 ${NAME}:	${OBJS}
-	${CC} -L ${LIB_DIR} -lmlx -framework OpenGL -framework AppKit ${OBJS} -o ${NAME} -g3 -fsanitize=address
+	${CC} ${OBJS} -lmlx -framework OpenGL -framework AppKit -o ${NAME} -g3 -fsanitize=address
 
 all: ${NAME}
 

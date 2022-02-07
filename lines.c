@@ -75,8 +75,8 @@ void	draw(t_data *data, t_coord *coord)
 	int	dx;
 	int	dy;
 
-	dx = ft_diff(coord->x0, coord->x1);
-	dy = ft_diff(coord->y0, coord->y1);
+	dx = abs(coord->x1 - coord->x0);
+	dy = abs(coord->y1 - coord->y0);
 	if (dy < dx)
 	{
 		if (coord->x0 > coord->x1)
@@ -103,56 +103,48 @@ void	horiz_lines(t_data *data)
 {
 	int		i;
 	int		j;
-	t_coord	*coord;
+	t_coord	coord;
 
-	i = 0;
-	coord = malloc(sizeof(t_coord));
-	if (!coord)
-		exit(0);
-	while (i < data->nbr_lines)
+	i = -1;
+	while (++i < data->nbr_lines)
 	{
 		j = -1;
 		while (++j < data->nbr_col - 1)
 		{
-			coord->x0 = j * data->gap;
-			coord->y0 = i * data->gap;
-			isometric(&coord->x0, &coord->y0, data->line[i][j]);
-			coord->x1 = (j + 1) * data->gap;
-			coord->y1 = i * data->gap;
-			isometric(&coord->x1, &coord->y1, data->line[i][j + 1]);
-			ft_append(coord, data);
-			draw(data, coord);
+			data->rgb = create_trgb(data->line[i][j]);
+			coord.x0 = j * data->gap;
+			coord.y0 = i * data->gap;
+			isometric(&coord.x0, &coord.y0, data->line[i][j]);
+			coord.x1 = (j + 1) * data->gap;
+			coord.y1 = i * data->gap;
+			isometric(&coord.x1, &coord.y1, data->line[i][j + 1]);
+			ft_append(&coord, data);
+			draw(data, &coord);
 		}
-		i++;
 	}
-	free(coord);
 }
 
 void	vertical_lines(t_data *data)
 {
 	int		i;
 	int		j;
-	t_coord	*coord;
+	t_coord	coord;
 
-	j = 0;
-	coord = malloc(sizeof(t_coord));
-	if (!coord)
-		exit(0);
-	while (j < data->nbr_col)
+	j = -1;
+	while (++j < data->nbr_col)
 	{
 		i = -1;
 		while (++i < data->nbr_lines - 1)
 		{
-			coord->x0 = j * data->gap;
-			coord->y0 = i * data->gap;
-			isometric(&coord->x0, &coord->y0, data->line[i][j]);
-			coord->x1 = j * data->gap;
-			coord->y1 = (i + 1) * data->gap;
-			isometric(&coord->x1, &coord->y1, data->line[i + 1][j]);
-			ft_append(coord, data);
-			draw(data, coord);
+			data->rgb = create_trgb(data->line[i][j]);
+			coord.x0 = j * data->gap;
+			coord.y0 = i * data->gap;
+			isometric(&coord.x0, &coord.y0, data->line[i][j]);
+			coord.x1 = j * data->gap;
+			coord.y1 = (i + 1) * data->gap;
+			isometric(&coord.x1, &coord.y1, data->line[i + 1][j]);
+			ft_append(&coord, data);
+			draw(data, &coord);
 		}
-		j++;
 	}
-	free(coord);
 }

@@ -17,24 +17,24 @@ void	ft_putchar(char c)
 	write(1, &c, 1);
 }
 
-void	ft_putnbr(int nb)
+void	ft_free(t_data *data)
 {
-	long int	nb1;
+	int	i;
 
-	nb1 = nb;
-	if (nb1 == -2147483647)
-		write(1, "-2147483647", 11);
-	else
-	{
-		if (nb1 < 0)
-		{
-			nb1 *= -1;
-			write (1, "-", 1);
-		}
-		if (nb1 > 9)
-			ft_putnbr((nb1 / 10));
-		ft_putchar(nb1 % 10 + 48);
-	}
+	i = -1;
+	while (data->line[++i])
+		free(data->line[i]);
+	free(data->line);
+}
+
+void	free_dest(char **dest)
+{
+	int	i;
+
+	i = -1;
+	while (dest[++i])
+		free(dest[i]);
+	free(dest);
 }
 
 int	ft_atoi(const char *str)
@@ -75,14 +75,4 @@ void	ft_swap(t_coord *coord)
 	y = coord->y0;
 	coord->y0 = coord->y1;
 	coord->y1 = y;
-}
-
-int	ft_diff(int x0, int x1)
-{
-	int	dx;
-
-	dx = x1 - x0;
-	if (dx < 0)
-		dx *= -1;
-	return (dx);
 }

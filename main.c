@@ -12,28 +12,6 @@
 
 #include "fdf.h"
 
-int	ft_key_hook(int key, t_data *data)
-{
-	if (key == 53)
-	{
-		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-		exit(0);
-	}
-	else if (key == 24)
-		data->gap += 2;
-	else if (key == 27)
-		data->gap -= 2;
-	else if (key == 124)
-		data->start_x += 5;
-	else if (key == 123)
-		data->start_x -= 5;
-	else if (key == 125)
-		data->start_y += 5;
-	else if (key == 126)
-		data->start_y -= 5;
-	return (0);
-}
-
 int	ft_expose_hook(t_data *data)
 {
 	data->img_ptr = mlx_new_image(data->mlx_ptr, data->size_x, data->size_y);
@@ -47,6 +25,29 @@ int	ft_expose_hook(t_data *data)
 	horiz_lines(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img_ptr, 0, 0);
 	mlx_destroy_image(data->mlx_ptr, data->img_ptr);
+	return (0);
+}
+
+int	ft_key_hook(int key, t_data *data)
+{
+	if (key == 53)
+	{
+		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+		exit(0);
+	}
+	else if (key == 24)
+		data->gap += 2;
+	else if (key == 27)
+		data->gap -= 2;
+	else if (key == 123)
+		data->start_x += 20;
+	else if (key == 124)
+		data->start_x -= 20;
+	else if (key == 126)
+		data->start_y += 20;
+	else if (key == 125)
+		data->start_y -= 20;
+	ft_expose_hook(data);
 	return (0);
 }
 
@@ -79,21 +80,16 @@ int	fdf(t_data *data)
 
 int	main(int ac, char **av)
 {
-	t_data	*data;
+	t_data	data;
 
-	if (ac != 2)
-		ft_error("Format is : ./fdf map/path");
-	data = malloc(sizeof(t_data));
-	data_init(data, av[1]);
-	if (!data)
-		return (-1);
-	if (fdf(data) == -1)
+	if (ac == 2)
 	{
-		ft_free(data->line);
-		free(data);
-		return (-1);
+		ft_bzero(&data, sizeof(t_data));
+		data_init(&data, av[1]);
+		ft_free(&data);
+		ft_bzero(&data, sizeof(t_data));
 	}
-	ft_free(data->line);
-	free(data);
+	else
+		ft_error("Format is : ./fdf map/path");
 	return (0);
 }

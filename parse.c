@@ -29,12 +29,8 @@ int	*ft_to_int(char *str, t_data *data)
 	while (arg[++i])
 	{
 		tab[i] = ft_atoi((const char *)arg[i]);
-	//	printf("%d, ", tab[i]);
-	}
-	//printf("\n");
-	i = -1;
-	while (arg[++i])
 		free(arg[i]);
+	}
 	free(arg);
 	return (tab);
 }
