@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 12:13:08 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/01/25 12:13:10 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/02/08 14:19:36 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,26 +26,28 @@ void	isometric(int *x, int *y, int z)
 int	create_trgb(int z)
 {
 	if (z < -10)
-		return (0 << 16 | 0 << 8 | 120);
-	if (z < -5)
-		return (0 << 16 | 0 << 8 | 130);
+		return (128 << 16 | 0 << 8 | 0);
+	else if (z < -5)
+		return (139 << 16 | 0 << 8 | 0);
+	else if (z < -3)
+		return (165 << 16 | 42 << 8 | 42);
 	else if (z < 0)
-		return (0 << 16 | 0 << 8 | 153);
+		return (178 << 16 | 34 << 8 | 34);
 	else if (z < 5)
-		return (0 << 16 | 0 << 8 | 204);
+		return (220 << 16 | 20 << 8 | 60);
 	else if (z < 10)
-		return (0 << 16 | 0 << 8 | 255);
+		return (255 << 16 | 0 << 8 | 0);
 	else if (z < 20)
-		return (51 << 16 | 51 << 8 | 255);
+		return (255 << 16 | 99 << 8 | 71);
 	else if (z < 30)
-		return (102 << 16 | 102 << 8 | 255);
+		return (255 << 16 | 127 << 8 | 80);
 	else if (z < 40)
-		return (110 << 16 | 110 << 8 | 255);
+		return (205 << 16 | 92 << 8 | 92);
 	else if (z < 50)
-		return (120 << 16 | 120 << 8 | 255);
+		return (240 << 16 | 128 << 8 | 128);
 	else if (z > 50)
-		return (130 << 16 | 130 << 8 | 200);
-	return (153 << 16 | 153 << 8 | 255);
+		return (233 << 16 | 150 << 8 | 122);
+	return (0);
 }
 
 void	ft_append(t_coord *coord, t_data *data)
@@ -56,10 +58,13 @@ void	ft_append(t_coord *coord, t_data *data)
 	coord->y1 += data->start_y;
 }
 
-void	ft_error(char *str)
+void	ft_putstr(char *str)
 {
-	perror(str);
-	exit(EXIT_FAILURE);
+	int	i;
+
+	i = -1;
+	while (str[++i])
+		ft_putchar(str[i]);
 }
 
 void	ft_bzero(void *s, size_t n)

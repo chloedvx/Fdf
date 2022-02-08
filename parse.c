@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 09:49:58 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/01/19 14:46:04 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/02/08 14:18:46 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_parse(char *path, t_data *data)
 	j = 0;
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
-		ft_error("Cannot access file");
+		return ;
 	while (j == i)
 	{
 		str = get_next_line(fd);

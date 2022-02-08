@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 09:49:51 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/01/19 14:42:55 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/02/08 14:12:48 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	data_init(t_data *data, char *av1);
 void	ft_free(t_data *data);
 int		create_trgb(int z);
 void	ft_swap(t_coord *coord);
-void	ft_error(char *str);
+void	ft_putstr(char *str);
 void	ft_append(t_coord *coord, t_data *data);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	vertical_lines(t_data *data);

@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 09:49:43 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/01/27 09:54:42 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/02/08 14:19:22 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,9 @@ int	main(int ac, char **av)
 		ft_bzero(&data, sizeof(t_data));
 	}
 	else
-		ft_error("Format is : ./fdf map/path");
+	{
+		ft_putstr("Format is : ./fdf map/path\n");
+		return (0);
+	}
 	return (0);
 }
