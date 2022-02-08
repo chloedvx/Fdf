@@ -17,14 +17,14 @@ void	ft_putchar(char c)
 	write(1, &c, 1);
 }
 
-void	ft_free(t_data *data)
+void	ft_free(int	**line)
 {
 	int	i;
 
 	i = -1;
-	while (data->line[++i])
-		free(data->line[i]);
-	free(data->line);
+	while (line[++i])
+		free(line[i]);
+	free(line);
 }
 
 void	free_dest(char **dest)

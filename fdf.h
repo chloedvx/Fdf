@@ -54,7 +54,8 @@ typedef struct s_data
 
 void	ft_bzero(void *s, size_t n);
 void	data_init(t_data *data, char *av1);
-void	ft_free(t_data *data);
+void	free_dest(char **dest);
+void	ft_free(int **line);
 int		create_trgb(int z);
 void	ft_swap(t_coord *coord);
 void	ft_putstr(char *str);
@@ -71,7 +72,6 @@ char	*get_next_line(int fd);
 char	*get_next_line2(char **temp, int fd);
 int		ft_is_nl(char *temp);
 int		ft_strlen(char *str);
-void	free_dest(char **dest);
 char	**ft_split(char const *s, char c);
 char	*ft_substr(char *s, unsigned int start, size_t len);
 char	*ft_strjoin(char *s1, char *s2);

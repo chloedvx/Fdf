@@ -82,11 +82,11 @@ int	main(int ac, char **av)
 {
 	t_data	data;
 
+	system("leaks executablename");
 	if (ac == 2)
 	{
 		ft_bzero(&data, sizeof(t_data));
 		data_init(&data, av[1]);
-		ft_free(&data);
 		ft_bzero(&data, sizeof(t_data));
 	}
 	else

@@ -61,4 +61,5 @@ void	data_init(t_data *data, char *av1)
 	ft_parse(av1, data);
 	data_init2(data);
 	fdf(data);
+	ft_free(data->line);
 }
