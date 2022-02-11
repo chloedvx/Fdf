@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 09:50:13 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/02/08 14:21:14 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/02/11 11:30:35 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,16 @@
 
 void	data_init2(t_data *data)
 {
-	data->size_x = 1044;
-	data->size_y = 700;
-	if (data->nbr_lines >= 400 || data->nbr_col >= 400)
+	if (data->nbr_lines >= 200 || data->nbr_col >= 200)
 	{
 		data->size_x = 1350;
 		data->size_y = 900;
-	}	
+	}
+	else
+	{
+		data->size_x = 1044;
+		data->size_y = 700;
+	}
 	if (data->nbr_lines <= 10 || data->nbr_col <= 10)
 		data->gap = 25;
 	if (data->nbr_lines >= 20 || data->nbr_col >= 20)
