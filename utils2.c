@@ -6,7 +6,7 @@
 /*   By: cdaveux <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 12:13:08 by cdaveux           #+#    #+#             */
-/*   Updated: 2022/02/08 14:19:36 by cdaveux          ###   ########.fr       */
+/*   Updated: 2022/02/11 11:23:41 by cdaveux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ int	create_trgb(int z)
 		return (205 << 16 | 92 << 8 | 92);
 	else if (z < 50)
 		return (240 << 16 | 128 << 8 | 128);
-	else if (z > 50)
+	else if (z >= 50)
 		return (233 << 16 | 150 << 8 | 122);
-	return (0);
+	return (233 << 16 | 150 << 8 | 122);
 }
 
 void	ft_append(t_coord *coord, t_data *data)
