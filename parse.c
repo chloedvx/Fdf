@@ -24,9 +24,11 @@ int	*ft_to_int(char *str, t_data *data)
 		return (NULL);
 	while (arg[++i])
 		data->nbr_col = i;
+	if (arg[--i][0] != '\n')
+		data->nbr_col++;
 	tab = malloc(sizeof(int) * data->nbr_col);
 	i = -1;
-	while (arg[++i])
+	while (arg[++i] && arg[i][0] != '\n')
 	{
 		tab[i] = ft_atoi((const char *)arg[i]);
 		free(arg[i]);
