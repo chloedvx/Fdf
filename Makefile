@@ -14,7 +14,7 @@ OBJS = ${SRCS:.c=.o}
 	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
 ${NAME}:	${OBJS}
-	${CC} ${OBJS} -lmlx -framework OpenGL -framework AppKit -o ${NAME} -g3 -fsanitize=address
+	${CC} ${OBJS} -lmlx -framework OpenGL -framework AppKit -o ${NAME} 
 
 all: ${NAME}
 
